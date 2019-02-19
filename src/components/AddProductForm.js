@@ -5,6 +5,7 @@ class AddProductForm extends React.Component {
     name: this.props.name || '',
     price: this.props.price || '',
     quantity: this.props.quantity || '',
+    editing: this.props.editing || false,
   };
 
   handleFormSubmit = (evt) => {
@@ -16,6 +17,17 @@ class AddProductForm extends React.Component {
     this.props.onFormSubmit(newProduct);
   };
 
+  handleUpdateSubmit = (evt) => {
+    this.props.onToggleEdit();
+    const product = {
+      id: this.props.productId,
+      title: this.state.name,
+      price: Number(this.state.price),
+      quantity: Number(this.state.quantity),
+    };
+    this.props.onUpdateSubmit(product);
+  };
+
   handleInputChange = (evt) => {
     let key = evt.target.id;
     key = key.split('-')[1];
@@ -25,7 +37,32 @@ class AddProductForm extends React.Component {
     });
   };
 
+  handleCancelClick = () => {
+    this.setState({
+      name: '',
+      price: '',
+      quantity: '',
+    });
+  };
+
   render() {
+    let addOrUpdateButtons;
+    if (this.state.editing) {
+      addOrUpdateButtons = (
+        <React.Fragment>
+          <a className="button" onClick={this.handleUpdateSubmit}>Update</a>
+          <a className="button" onClick={this.props.onToggleEdit}>Cancel</a>
+        </React.Fragment>
+      );
+    } else {
+      addOrUpdateButtons = (
+        <React.Fragment>
+          <a className="button" onClick={this.handleFormSubmit}>Add</a>
+          <a className="button" onClick={this.handleCancelClick}>Cancel</a>
+        </React.Fragment>
+      );
+    }
+
     return (
       <div className="add-form visible">
         <p><a className="button add-product-button">Add A Product</a></p>
@@ -55,14 +92,13 @@ class AddProductForm extends React.Component {
             <input 
               type="text" 
               id="product-quantity" 
-              value={this.state.quantity || '0'}
+              value={this.state.quantity}
               onChange={this.handleInputChange}
             />
           </div>
 
           <div className="actions form-actions">
-            <a className="button" onClick={this.handleFormSubmit}>Add</a>
-            <a className="button">Cancel</a>
+            {addOrUpdateButtons}
           </div>
         </form>
       </div>

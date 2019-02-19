@@ -9,6 +9,7 @@ class ProductList extends React.Component {
           key={product.id}
           {...product}
           onAddClick={this.props.onAddClick}
+          onUpdateSubmit={this.props.onUpdateSubmit}
         />
       );
     });

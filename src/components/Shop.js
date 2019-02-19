@@ -29,8 +29,6 @@ class Shop extends Component {
       return item.id === itemId;
     }
 
-
-
     const currItem = this.state.data.find(findItem);
 
     if (this.state.cart.find(findItem)) {
@@ -79,6 +77,18 @@ class Shop extends Component {
     });
   };
 
+  handleUpdateSubmit = (product) => {
+    this.setState({
+      data: this.state.data.map((item) => {
+        if (item.id === product.id) {
+          return product;
+        } else {
+          return item;
+        }
+      }),
+    });
+  };
+
   render() {
     return (
       <div id="app">
@@ -94,6 +104,7 @@ class Shop extends Component {
           <ProductList
             data={this.state.data}
             onAddClick={this.handleAddClick}
+            onUpdateSubmit={this.handleUpdateSubmit}
           />
 
           <AddProductForm 

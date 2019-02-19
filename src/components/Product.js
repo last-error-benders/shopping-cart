@@ -10,7 +10,7 @@ class Product extends React.Component {
     this.props.onAddClick(this.props.id);
   }
 
-  toggleEdit = () => {
+  handleToggleEdit = () => {
     this.setState({
       editing: !this.state.editing,
     });
@@ -34,15 +34,20 @@ class Product extends React.Component {
     };
 
     let editFormOrAddButton = (
-      <a className="button edit" onClick={this.toggleEdit}>Edit</a>
+      <a className="button edit" onClick={this.handleToggleEdit}>Edit</a>
     );
     
     if (this.state.editing) {
+      addButton = undefined;
       editFormOrAddButton = (
         <AddProductForm
           name={this.props.title}
           price={this.props.price}
           quantity={this.props.quantity}
+          productId={this.props.id}
+          editing={true}
+          onUpdateSubmit={this.props.onUpdateSubmit}
+          onToggleEdit={this.handleToggleEdit}
         />
         // cancel button
       );
