@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import ProductList from './ProductList';
 import seed from '../lib/data';
 import Cart from './Cart';
+import AddProductForm from './AddProductForm';
+import {autoIncrementer} from '../lib/helpers';
+
+const idGenerator = autoIncrementer();
 
 class Shop extends Component {
   state = {
     data: [],
     cart: [],
+    form: {
+      'name': '',
+      'price': '',
+      'quantity': '',
+    }
   };
 
   componentDidMount() {
@@ -19,6 +28,8 @@ class Shop extends Component {
     const findItem = (item) => {
       return item.id === itemId;
     }
+
+
 
     const currItem = this.state.data.find(findItem);
 
@@ -41,11 +52,30 @@ class Shop extends Component {
         })),
       });
     }
+
+    this.setState({
+      data: this.state.data.map((item) => {
+        if (item.id === currItem.id) {
+          let newItem = Object.assign({}, item);
+          newItem.quantity -= 1;
+          return newItem;
+        } else {
+          return item;
+        }
+      }),
+    });
   };
 
   handleCheckout = () => {
     this.setState({
       cart: [],
+    });
+  };
+
+  handleFormSubmit = (newProduct) => {
+    newProduct.id = idGenerator();
+    this.setState({
+      data: this.state.data.concat(newProduct)
     });
   };
 
@@ -66,31 +96,10 @@ class Shop extends Component {
             onAddClick={this.handleAddClick}
           />
 
-          <div className="add-form visible">
-            <p><a className="button add-product-button">Add A Product</a></p>
-            <h3>Add Product</h3>
-            <form>
-              <div className="input-group">
-                <label htmlFor="product-name">Product Name</label>
-                <input type="text" id="product-name" value="" />
-              </div>
-
-              <div className="input-group">
-                <label htmlFor="product-price">Price</label>
-                <input type="text" id="product-price" value="" />
-              </div>
-
-              <div className="input-group">
-                <label htmlFor="product-quantity">Quantity</label>
-                <input type="text" id="product-quantity" value="" />
-              </div>
-
-              <div className="actions form-actions">
-                <a className="button">Add</a>
-                <a className="button">Cancel</a>
-              </div>
-            </form>
-          </div>
+          <AddProductForm 
+            product={this.state.form}
+            onFormSubmit={this.handleFormSubmit}
+          />
         </main>
       </div>
     );
