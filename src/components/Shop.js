@@ -15,7 +15,8 @@ class Shop extends Component {
       'name': '',
       'price': '',
       'quantity': '',
-    }
+    },
+    AddProductFormOpen: false,
   };
 
   componentDidMount() {
@@ -89,6 +90,30 @@ class Shop extends Component {
     });
   };
 
+  handleDeleteClick = (itemId) => {
+    this.setState({
+      data: this.state.data.filter((item) => {
+        if (item.id === itemId) {
+          return false;
+        } else {
+          return true;
+        }
+      }),
+    });
+ }
+
+  handleAddProductClick = () => {
+    this.setState({
+      AddProductFormOpen: true,
+    });
+  }
+
+  handleCancelClick = () => {
+    this.setState({
+      AddProductFormOpen: false,
+    });
+  }
+
   render() {
     return (
       <div id="app">
@@ -105,12 +130,21 @@ class Shop extends Component {
             data={this.state.data}
             onAddClick={this.handleAddClick}
             onUpdateSubmit={this.handleUpdateSubmit}
+            onDeleteClick={this.handleDeleteClick}
           />
 
-          <AddProductForm 
-            product={this.state.form}
-            onFormSubmit={this.handleFormSubmit}
-          />
+          {this.state.AddProductFormOpen ?
+              ( <AddProductForm
+                  product={this.state.form}
+                  onCancelClick={this.handleCancelClick}
+                  onFormSubmit={this.handleFormSubmit}
+                />)
+          :
+            ( <a
+                className="button add-to-cart"
+                onClick={this.handleAddProductClick}
+              >Add A Product</a>)
+            }
         </main>
       </div>
     );

@@ -16,6 +16,10 @@ class Product extends React.Component {
     });
   }
 
+  handleDeleteClick = () => {
+    this.props.onDeleteClick(this.props.id);
+  }
+
   render() {
     let addButton = (
       <a
@@ -36,7 +40,7 @@ class Product extends React.Component {
     let editFormOrAddButton = (
       <a className="button edit" onClick={this.handleToggleEdit}>Edit</a>
     );
-    
+
     if (this.state.editing) {
       addButton = undefined;
       editFormOrAddButton = (
@@ -64,7 +68,10 @@ class Product extends React.Component {
             {addButton}
             {editFormOrAddButton}
           </div>
-          <a className="delete-button"><span>X</span></a>
+          <a 
+            className="delete-button"
+            onClick={this.handleDeleteClick}
+          ><span>X</span></a>
         </div>
       </div>
     );

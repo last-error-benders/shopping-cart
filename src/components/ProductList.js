@@ -10,6 +10,7 @@ class ProductList extends React.Component {
           {...product}
           onAddClick={this.props.onAddClick}
           onUpdateSubmit={this.props.onUpdateSubmit}
+          onDeleteClick={this.props.onDeleteClick}
         />
       );
     });

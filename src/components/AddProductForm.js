@@ -43,6 +43,7 @@ class AddProductForm extends React.Component {
       price: '',
       quantity: '',
     });
+    this.props.onCancelClick();
   };
 
   render() {
