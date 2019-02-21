@@ -5,6 +5,7 @@ import Cart from './Cart';
 import AddProductForm from './AddProductForm';
 import {autoIncrementer} from '../lib/helpers';
 import {Route, Switch} from 'react-router-dom';
+import Product from './Product';
 
 const idGenerator = autoIncrementer();
 
@@ -152,9 +153,22 @@ class Shop extends Component {
           </div>
         )} />
 
-        <Route path='/product/:productId' exact render={(props) => (
-          return <Product />
-        )} />
+        <Route path='/product/:productId' exact render={(props) => {
+          let id = props.match.params.productId;
+          let product = this.state.data.find((item) => item.id === Number(id));
+
+          if (product) {
+            return (<Product
+              {...product}
+              onAddClick={this.handleAddProductClick}
+              onUpdateSubmit={this.handleUpdateSubmit}
+              onDeleteClick={this.handleDeleteClick}
+            />);
+          } else {
+            return null;
+          }
+          
+        }} />
       </Switch>
     );
   }
