@@ -4,6 +4,21 @@ import { shallow } from 'enzyme';
 import Shop from '../components/Shop';
 import Cart from '../components/Cart';
 
+/*
+ Questions:
+ 1. why doesn't the `to.equal` test work? We see this in the documentation, but
+ when we try it, it doesn't work. Only the `toBe` test seems to work correctly.
+
+ 2. We can't seem to test the `Cart` component. We've tried it several ways:
+   * Creating a second wrapper in the top-level `describe` statement
+     * This makes all the tests fail, even ones that were working before
+
+   * Using a nested `Describe` block.
+   * The other tests run correctly, but the ones in the nested `subscribe`
+   don't pass
+
+*/
+
 describe(`Shop`, () => {
   let wrapper;
   // let cartWrapper; // adding another wrapper makes all tests fail
@@ -60,7 +75,6 @@ describe(`Shop`, () => {
       console.log('h2 exists in cartWrapper', cartWrapper.exists('h2'));
       expect(cartWrapper.exists('h2')).toBe(true);
     });
-
   });
 });
 //
