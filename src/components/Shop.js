@@ -4,6 +4,7 @@ import seed from '../lib/data';
 import Cart from './Cart';
 import AddProductForm from './AddProductForm';
 import {autoIncrementer} from '../lib/helpers';
+import {Route, Switch} from 'react-router-dom';
 
 const idGenerator = autoIncrementer();
 
@@ -116,37 +117,45 @@ class Shop extends Component {
 
   render() {
     return (
-      <div id="app">
-        <header>
-          <h1>The Shop!</h1>
-          <Cart
-            items={this.state.cart}
-            onCheckoutClick={this.handleCheckout}
-          />
-        </header>
+      <Switch>
+        <Route path='/' exact render={() => (
+          <div id="app">
+            <header>
+              <h1>The Shop!</h1>
+              <Cart
+                items={this.state.cart}
+                onCheckoutClick={this.handleCheckout}
+              />
+            </header>
 
-        <main>
-          <ProductList
-            data={this.state.data}
-            onAddClick={this.handleAddClick}
-            onUpdateSubmit={this.handleUpdateSubmit}
-            onDeleteClick={this.handleDeleteClick}
-          />
+            <main>
+              <ProductList
+                data={this.state.data}
+                onAddClick={this.handleAddClick}
+                onUpdateSubmit={this.handleUpdateSubmit}
+                onDeleteClick={this.handleDeleteClick}
+              />
 
-          {this.state.AddProductFormOpen ?
-              ( <AddProductForm
-                  product={this.state.form}
-                  onCancelClick={this.handleCancelClick}
-                  onFormSubmit={this.handleFormSubmit}
-                />)
-          :
-            ( <a
-                className="button add-to-cart"
-                onClick={this.handleAddProductClick}
-              >Add A Product</a>)
-            }
-        </main>
-      </div>
+              {this.state.AddProductFormOpen ?
+                  ( <AddProductForm
+                      product={this.state.form}
+                      onCancelClick={this.handleCancelClick}
+                      onFormSubmit={this.handleFormSubmit}
+                    />)
+              :
+                ( <a
+                    className="button add-to-cart"
+                    onClick={this.handleAddProductClick}
+                  >Add A Product</a>)
+                }
+            </main>
+          </div>
+        )} />
+
+        <Route path='/product/:productId' exact render={(props) => (
+          return <Product />
+        )} />
+      </Switch>
     );
   }
 }
