@@ -5,8 +5,8 @@ import Shop from '../components/Shop';
 import Cart from '../components/Cart';
 
 // it('has an h1 element', () => {
-  // const wrapper = shallow(<Shop />);
-  // expect(wrapper.find('h1').text()).toEqual('Welcome!');
+// const wrapper = shallow(<Shop />);
+// expect(wrapper.find('h1').text()).toEqual('Welcome!');
 // });
 //
 describe(`Shop`, () => {
@@ -16,18 +16,30 @@ describe(`Shop`, () => {
     wrapper = shallow(<Shop />);
   });
 
-  describe(`Cart`, () => {
-    beforeEach(() => {
-      wrapper = shallow(<Cart />);
-    });
+  it(`.cart exists in Shop`, () => {
+    console.log(wrapper.exists('.cart'));
+    expect(wrapper.exists('.cart')).toBe(true);
+  });
 
-    // it(`has 0 items`, () => {
-      // console.log(wrapper.find('.cart'));
-      // expect(wrapper.exists('.cart').toBe(true));
+  it(`.cart exists in Shop`, () => {
+    console.log(wrapper.exists('.add-to-cart'));
+    expect(productWrapper.exists('.add-to-cart')).toBe(true);
+  });
+
+  // ask about this:  whyyy?
+  // it(`add to cart button exists`, () => {
+    // expect(wrapper.containsMatchingElement(<a class="button add-to-cart">Add to Cart</a>)).toBe(true);
+  // });
+
+  // ask about this:  whyyy?
+  // describe(`Cart`, () => {
+    // beforeEach(() => {
+      // wrapper = shallow(<Cart />);
     // });
 
-    it(`has 0 items`, () => {
-      expect(wrapper.contains('.cart')).toBe(true);
-    });
-  });
+    // it(`please work`, () => {
+      // console.log(wrapper.exists('.cart'));
+      // expect(wrapper.exists('.cart')).toBe(true);
+    // });
+  // });
 });
