@@ -5,7 +5,12 @@ import store from '../store';
 
 class ProductList extends React.Component {
   componentDidMount() {
+    let unsubscribe = store.subscribe(() => this.forceUpdate());
     store.dispatch({type: 'PRODUCTS_FETCHED', products: seed});
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
   }
 
   render() {

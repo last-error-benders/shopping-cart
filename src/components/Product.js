@@ -1,6 +1,7 @@
 import React from 'react';
 import AddProductForm from './AddProductForm';
 import {Link, NavLink} from 'react-router-dom';
+import store from '../store';
 
 class Product extends React.Component {
   state = {
@@ -18,7 +19,11 @@ class Product extends React.Component {
   }
 
   handleDeleteClick = () => {
-    this.props.onDeleteClick(this.props.id);
+    store.dispatch({type: "PRODUCT_DELETED", id: this.props.id})
+  }
+
+  handleUpdateSubmit = (product) => {
+    store.dispatch({type: 'PRODUCT_EDITED', product: product})
   }
 
   render() {
@@ -51,7 +56,7 @@ class Product extends React.Component {
           quantity={this.props.quantity}
           productId={this.props.id}
           editing={true}
-          onUpdateSubmit={this.props.onUpdateSubmit}
+          onUpdateSubmit={this.handleUpdateSubmit}
           onToggleEdit={this.handleToggleEdit}
         />
         // cancel button
