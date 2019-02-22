@@ -1,9 +1,15 @@
 import React from 'react';
 import Product from './Product';
+import seed from '../lib/data';
+import store from '../store';
 
 class ProductList extends React.Component {
+  componentDidMount() {
+    store.dispatch({type: 'PRODUCTS_FETCHED', products: seed});
+  }
+
   render() {
-    const products = this.props.data.map((product) => {
+    const products = store.getState().products.map((product) => {
       return (
         <Product
           key={product.id}

@@ -131,7 +131,6 @@ class Shop extends Component {
 
             <main>
               <ProductList
-                data={this.state.data}
                 onAddClick={this.handleAddClick}
                 onUpdateSubmit={this.handleUpdateSubmit}
                 onDeleteClick={this.handleDeleteClick}
