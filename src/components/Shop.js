@@ -160,6 +160,7 @@ class Shop extends Component {
           if (product) {
             return (<Product
               {...product}
+              isLinkActive={true}
               onAddClick={this.handleAddProductClick}
               onUpdateSubmit={this.handleUpdateSubmit}
               onDeleteClick={this.handleDeleteClick}

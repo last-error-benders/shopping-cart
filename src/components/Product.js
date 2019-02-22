@@ -1,6 +1,6 @@
 import React from 'react';
 import AddProductForm from './AddProductForm';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 class Product extends React.Component {
   state = {
@@ -61,9 +61,14 @@ class Product extends React.Component {
     return (
       <div className="product">
         <div className="product-details">
-          <Link to={`/product/${this.props.id}`}>
+          { !this.props.isLinkActive ? 
+            (<h3>{this.props.title}</h3>)
+          :
+          (<Link 
+            to={`/product/${this.props.id}`}>
             <h3>{this.props.title}</h3>
-          </Link>
+          </Link>)
+          }
           <p className="price">${this.props.price}</p>
           <p className="quantity">{this.props.quantity} left in stock</p>
 
