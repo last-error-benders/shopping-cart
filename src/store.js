@@ -1,7 +1,10 @@
 import {createStore} from 'redux';
 
 const reducer = (state = {}, action) => {
-  return {products: productsReducer(state.products, action)};
+  return {
+    products: productsReducer(state.products, action),
+    cart: cartReducer(state.cart, action),
+  };
 }
 
 const productsReducer = (state = [], action) => {
@@ -20,10 +23,43 @@ const productsReducer = (state = [], action) => {
         return product;
       }
     })
+  } else if (action.type === 'ITEM_ADDED_TO_CART') {
+    return state.map((product) => {
+      if (product.id === action.product.id) {
+        return Object.assign({}, product, {
+          quantity: product.quantity - 1,
+        });
+      } else {
+        return product;
+      }
+    });
   } else {
     return state;
   }
 }
+
+const cartReducer = (state = [], action) => {
+  if (action.type === 'ITEM_ADDED_TO_CART') {
+    if (state.find((item) => (item.id === action.product.id))) {
+      return state.map((item, index) => {
+        if (action.product.id === item.id) {
+          return Object.assign({}, item, {
+            quantity: item.quantity + 1,
+          });
+        } else {
+          return item;
+        }
+      });
+    } else {
+      return state.concat({
+        ...action.product,
+        quantity: 1,
+      });
+    }
+  } else {
+    return state;
+  }
+};
 
 // const product = {
 //   id: this.props.productId,

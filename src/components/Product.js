@@ -9,7 +9,16 @@ class Product extends React.Component {
   };
 
   handleAddClick = () => {
-    this.props.onAddClick(this.props.id);
+    const {id, title, price} = this.props;
+
+    store.dispatch({
+      type: 'ITEM_ADDED_TO_CART',
+      product: {
+        id,
+        title,
+        price,
+      },
+    });
   }
 
   handleToggleEdit = () => {

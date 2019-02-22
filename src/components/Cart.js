@@ -1,9 +1,18 @@
 import React from 'react';
 import { totalPrice } from '../lib/helpers';
+import store from '../store';
 
 class Cart extends React.Component {
+  componentDidMount() {
+    const unsubscribe = store.subscribe(() => this.forceUpdate());
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   render() {
-    const items = this.props.items.map((item) => {
+    const items = store.getState().cart.map((item) => {
       return (
         <tr key={item.id}>
           <td>{item.title}</td>
@@ -13,7 +22,7 @@ class Cart extends React.Component {
       );
     });
 
-    if (this.props.items.length === 0) {
+    if (items.length === 0) {
       return (
         <div className="cart">
           <h2>Your Cart</h2>
@@ -41,7 +50,7 @@ class Cart extends React.Component {
               { items }
 
               <tr>
-                <td colSpan="3" className="total">Total: ${totalPrice(this.props.items)}</td>
+                <td colSpan="3" className="total">Total: ${totalPrice(store.getState().cart)}</td>
               </tr>
             </tbody>
           </table>
